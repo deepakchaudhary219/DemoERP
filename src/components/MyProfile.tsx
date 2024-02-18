@@ -29,14 +29,39 @@ import AccessTimeFilledRoundedIcon from '@mui/icons-material/AccessTimeFilledRou
 import VideocamRoundedIcon from '@mui/icons-material/VideocamRounded';
 import InsertDriveFileRoundedIcon from '@mui/icons-material/InsertDriveFileRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
-import DropZone from './DropZone';
-import FileUpload from './FileUpload';
-import CountrySelector from './CountrySelector';
+
 import EditorToolbar from './EditorToolbar';
+import { MenuItem } from '@mui/joy';
+import RefreshRoundedIcon from '@mui/icons-material/RefreshRounded';
+import logo from '../assets/company_logo.jpeg'
+import EqualizerIcon from "@mui/icons-material/Equalizer";
 
-export default function MyProfile() {
+import { useSelector } from 'react-redux';
+
+
+ const MyProfile = () => {
+
+  const showTypography = useSelector((state: any) => state.visibility.showTypography);
+
+
+
+  
   return (
+
+<>
+
+    {
+      !showTypography && <Box sx={{ flex: 1, width: '100%', display:'flex', justifyContent:'center', alignItems:'center', columnGap:2 }}>
+        
+        <Typography level='h1' fontWeight='400' textColor={'primary.900'} sx={{
+        
+
+        }}>Welcome To Sahasrara</Typography>
+      </Box>
+    }
+    {showTypography && 
     <Box sx={{ flex: 1, width: '100%' }}>
       <Box
         sx={{
@@ -50,7 +75,7 @@ export default function MyProfile() {
           <Breadcrumbs
             size="sm"
             aria-label="breadcrumbs"
-            separator={<ChevronRightRoundedIcon sx={{fontSize:'sm'}} />}
+            separator={<ChevronRightRoundedIcon sx={{ fontSize: 'sm' }} />}
             sx={{ pl: 0 }}
           >
             <Link
@@ -59,7 +84,7 @@ export default function MyProfile() {
               href="#some-link"
               aria-label="Home"
             >
-              <HomeRoundedIcon />
+              <EqualizerIcon/>
             </Link>
             <Link
               underline="hover"
@@ -88,7 +113,7 @@ export default function MyProfile() {
             >
               Item Defination
             </Link>
-            
+
             <Typography color="primary" fontWeight={500} fontSize={12}>
               General
             </Typography>
@@ -137,7 +162,7 @@ export default function MyProfile() {
               Purchase
             </Tab>
             <Tab sx={{ borderRadius: '6px 6px 0 0' }} indicatorInset value={4}>
-            Sales
+              Sales
             </Tab>
             <Tab sx={{ borderRadius: '6px 6px 0 0' }} indicatorInset value={5}>
               Attachment
@@ -158,87 +183,211 @@ export default function MyProfile() {
         spacing={4}
         sx={{
           display: 'flex',
-          maxWidth: '800px',
+          maxWidth: 'lg',
           mx: 'auto',
           px: { xs: 2, md: 6 },
           py: { xs: 2, md: 3 },
         }}
       >
+        
+
+        
         <Card>
-          {/* <Box sx={{ mb: 1 }}>
-            <Typography level="title-md">Personal info</Typography>
-            <Typography level="body-sm">
-              Customize how your profile information will apper to the networks.
-            </Typography>
-          </Box> */}
-          <Divider />
-          {/* <Stack
+
+          <Stack
             direction="row"
             spacing={3}
             sx={{ display: { xs: 'none', md: 'flex' }, my: 1 }}
           >
-            <Stack direction="column" spacing={1}>
-              <AspectRatio
-                ratio="1"
-                maxHeight={200}
-                sx={{ flex: 1, minWidth: 120, borderRadius: '100%' }}
-              >
-                <img
-                  src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
-                  srcSet="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286&dpr=2 2x"
-                  loading="lazy"
-                  alt=""
-                />
-              </AspectRatio>
-              <IconButton
-                aria-label="upload new picture"
-                size="sm"
-                variant="outlined"
-                color="neutral"
-                sx={{
-                  bgcolor: 'background.body',
-                  position: 'absolute',
-                  zIndex: 2,
-                  borderRadius: '50%',
-                  left: 100,
-                  top: 170,
-                  boxShadow: 'sm',
-                }}
-              >
-                <EditRoundedIcon />
-              </IconButton>
-            </Stack>
+           
+            
+
             <Stack spacing={2} sx={{ flexGrow: 1 }}>
+
+            
+
               <Stack spacing={1}>
-                <FormLabel>Name</FormLabel>
+
+
+              <Stack direction="row" spacing={2}>
+              
+              <div style={{
+                width: '49%'
+              }}>
+                <FormControl sx={{ display: { sm: 'contents' } }}>
+                  <FormLabel>Category</FormLabel>
+                  <Select
+                    size="sm"
+                    // startDecorator={<AccessTimeFilledRoundedIcon />}
+                    defaultValue="1"
+                  >
+                    <Option value="1">
+
+                      <Typography textColor="text.tertiary" ml={0.5}>
+                        Finish Goods
+                      </Typography>
+                    </Option>
+                    <Option value="2">
+
+                      <Typography textColor="text.tertiary" ml={0.5}>
+                        XYZ
+                      </Typography>
+                    </Option>
+                    <Option value="3">
+
+                      <Typography textColor="text.tertiary" ml={0.5}>
+                        ABC
+                      </Typography>
+                    </Option>
+                  </Select>
+                </FormControl>
+              </div>
+              
+                <FormControl sx={{ flexGrow: 1 }}>
+                  <FormLabel>Item No</FormLabel>
+                  <Input
+                    size="sm"
+                    type="text"
+                    // startDecorator={<EmailRoundedIcon />}
+                    placeholder="Item No"
+                    defaultValue="ZO-2618"
+                    sx={{ flexGrow: 1 }}
+                  />
+                </FormControl> 
+                <Stack direction={'column'}>
+                <Typography>{'\u00A0'}</Typography>
+             <Button variant='soft' size='sm' >Same As</Button>
+                </Stack>
+             
+            </Stack>
+
+
+                <FormLabel>Customer Description</FormLabel>
                 <FormControl
                   sx={{ display: { sm: 'flex-column', md: 'flex-row' }, gap: 2 }}
                 >
-                  <Input size="sm" placeholder="First name" />
-                  <Input size="sm" placeholder="Last name" sx={{ flexGrow: 1 }} />
+                  <Input size="sm" placeholder="aphabhet.co" sx={{ flexGrow: 1 }} />
+
+                </FormControl>
+                <FormLabel>Supplier Description</FormLabel>
+                <FormControl
+                  sx={{ display: { sm: 'flex-column', md: 'flex-row' }, gap: 2 }}
+                >
+                  <Input size="sm" placeholder="abc-xyz" sx={{ flexGrow: 1 }} />
+
+                </FormControl>
+                <FormLabel>Custom Description</FormLabel>
+                <FormControl
+                  sx={{ display: { sm: 'flex-column', md: 'flex-row' }, gap: 2 }}
+                >
+                  <Input size="sm" placeholder="abc alpha" sx={{ flexGrow: 1 }} />
+
                 </FormControl>
               </Stack>
               <Stack direction="row" spacing={2}>
-                <FormControl>
-                  <FormLabel>Role</FormLabel>
-                  <Input size="sm" defaultValue="UI Developer" />
-                </FormControl>
+                <div style={{
+                  width: '23.8%'
+                }}>
+                  <FormControl sx={{ display: { sm: 'contents' } }}>
+                    <FormLabel>Unit</FormLabel>
+                    <Select
+                      size="sm"
+                      // startDecorator={<AccessTimeFilledRoundedIcon />}
+                      defaultValue="1"
+                    >
+                      <Option value="1">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          Pcs
+                        </Typography>
+                      </Option>
+                      <Option value="2">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          Pcs2 { }
+                        </Typography>
+                      </Option>
+                      <Option value="3">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          Pcs3
+                        </Typography>
+                      </Option>
+                    </Select>
+                  </FormControl>
+                </div>
+                <div style={{
+                  width: '23.8%'
+                }}>
+                  <FormControl sx={{ display: { sm: 'contents' } }}>
+                    <FormLabel>Finish</FormLabel>
+                    <Select
+                      size="sm"
+                      // startDecorator={<AccessTimeFilledRoundedIcon />}
+                      defaultValue="1"
+                    >
+                      <Option value="1">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          N.A
+                        </Typography>
+                      </Option>
+                      <Option value="2">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          XYZ
+                        </Typography>
+                      </Option>
+                      <Option value="3">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          ABC
+                        </Typography>
+                      </Option>
+                    </Select>
+                  </FormControl>
+                </div>
                 <FormControl sx={{ flexGrow: 1 }}>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Grade</FormLabel>
                   <Input
                     size="sm"
                     type="email"
-                    startDecorator={<EmailRoundedIcon />}
-                    placeholder="email"
-                    defaultValue="siriwatk@test.com"
+                    // startDecorator={<EmailRoundedIcon />}
+                    placeholder="N.A"
+                    // defaultValue="siriwatk@test.com"
                     sx={{ flexGrow: 1 }}
                   />
                 </FormControl>
               </Stack>
-              <div>
+              <Stack direction="row" spacing={2}>
+
+                <FormControl sx={{ flexGrow: 1 }}>
+                  <FormLabel>Standard</FormLabel>
+                  <Input
+                    size="sm"
+                    type="email"
+                    // startDecorator={<EmailRoundedIcon />}
+                    placeholder="Standard"
+                    // defaultValue="siriwatk@test.com"
+                    sx={{ flexGrow: 1 }}
+                  />
+                </FormControl>
+                <FormControl sx={{ flexGrow: 1 }}>
+                  <FormLabel>Alternative Code</FormLabel>
+                  <Input
+                    size="sm"
+                    type="email"
+                    // startDecorator={<EmailRoundedIcon />}
+                    placeholder="Alternative Code"
+                    // defaultValue="siriwatk@test.com"
+                    sx={{ flexGrow: 1 }}
+                  />
+                </FormControl>
+              </Stack>
+              {/* <div>
                 <CountrySelector />
-              </div>
-              <div>
+              </div> */}
+              {/* <div>
                 <FormControl sx={{ display: { sm: 'contents' } }}>
                   <FormLabel>Timezone</FormLabel>
                   <Select
@@ -260,9 +409,411 @@ export default function MyProfile() {
                     </Option>
                   </Select>
                 </FormControl>
-              </div>
+              </div> */}
+
+              <FormControl sx={{ flexGrow: 1 }}>
+                <FormLabel>Group</FormLabel>
+                <Input
+                  size="sm"
+                  type="text"
+                  // startDecorator={<EmailRoundedIcon />}
+                  placeholder="N.A"
+                  defaultValue="Sanitary"
+                  sx={{ flexGrow: 1 }}
+                />
+              </FormControl>
+              <FormControl sx={{ flexGrow: 1 }}>
+                <FormLabel>Material Type</FormLabel>
+                <Input
+                  size="sm"
+                  type="text"
+                  // startDecorator={<EmailRoundedIcon />}
+                  placeholder="N.A"
+                  defaultValue="BRASS"
+                  sx={{ flexGrow: 1 }}
+                />
+              </FormControl>
+
+              <Stack direction="row" spacing={2}>
+                {/* <div style={{
+                  width: '23.8%'
+                }}>
+                  <FormControl sx={{ display: { sm: 'contents' } }}>
+                    <FormLabel>Unit</FormLabel>
+                    <Select
+                      size="sm"
+                      // startDecorator={<AccessTimeFilledRoundedIcon />}
+                      defaultValue="1"
+                    >
+                      <Option value="1">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          Pcs
+                        </Typography>
+                      </Option>
+                      <Option value="2">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          Pcs2 { }
+                        </Typography>
+                      </Option>
+                      <Option value="3">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          Pcs3
+                        </Typography>
+                      </Option>
+                    </Select>
+                  </FormControl>
+                </div> */}
+
+
+                <div>
+                  <FormControl sx={{ flexGrow: 1 }}>
+                    <FormLabel>Custom Heading</FormLabel>
+                    <Input
+                      size="sm"
+                      type="text"
+                      // startDecorator={<EmailRoundedIcon />}
+                      placeholder="N.A"
+                      defaultValue="00001"
+                      sx={{ flexGrow: 1 }}
+                    />
+                  </FormControl>
+                </div>
+
+                <FormControl sx={{ flexGrow: 1 }}>
+                  <FormLabel>{'\u00A0'}</FormLabel>
+                  <Input
+                    size="sm"
+                    type="text"
+                    // startDecorator={<EmailRoundedIcon />}
+                    placeholder="N.A"
+                    defaultValue="N.A"
+                    sx={{ flexGrow: 1 }}
+                  />
+                </FormControl>
+
+                <div style={{
+                  width: '23.8%'
+                }}>
+                  <FormControl sx={{ display: { sm: 'contents' } }}>
+                    <FormLabel>Status</FormLabel>
+                    <Select
+                      size="sm"
+                      // startDecorator={<AccessTimeFilledRoundedIcon />}
+                      defaultValue="1"
+                    >
+                      <Option value="1">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          Free
+                        </Typography>
+                      </Option>
+                      <Option value="2">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          Not Free
+                        </Typography>
+                      </Option>
+                      <Option value="3">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          No Free
+                        </Typography>
+                      </Option>
+                    </Select>
+                  </FormControl>
+                </div>
+              </Stack>
+              <Stack direction="row" spacing={2}>
+
+
+
+
+
+
+
+                <div style={{
+                  width: '50%'
+                }}>
+                  <FormControl sx={{ display: { sm: 'contents' } }}>
+                    <FormLabel>Classification</FormLabel>
+                    <Select
+                      size="sm"
+                      // startDecorator={<AccessTimeFilledRoundedIcon />}
+                      defaultValue="1"
+                    >
+                      <Option value="1">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          Veneto
+                        </Typography>
+                      </Option>
+                      <Option value="2">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          Veneto2
+                        </Typography>
+                      </Option>
+                      <Option value="3">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          Veneto3
+                        </Typography>
+                      </Option>
+                    </Select>
+                  </FormControl>
+                </div>
+                <div style={{
+                  width: '50%'
+                }}>
+                  <FormControl sx={{ display: { sm: 'contents' } }}>
+                    <FormLabel>Sub Classification</FormLabel>
+                    <Select
+                      size="sm"
+                      // startDecorator={<AccessTimeFilledRoundedIcon />}
+                      defaultValue="1"
+                    >
+                      <Option value="1">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          Free
+                        </Typography>
+                      </Option>
+                      <Option value="2">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          Not Free
+                        </Typography>
+                      </Option>
+                      <Option value="3">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          No Free
+                        </Typography>
+                      </Option>
+                    </Select>
+                  </FormControl>
+                </div>
+              </Stack>
+              <Stack direction="row" spacing={2}>
+                {/* <div style={{
+                  width: '23.8%'
+                }}>
+                  <FormControl sx={{ display: { sm: 'contents' } }}>
+                    <FormLabel>Unit</FormLabel>
+                    <Select
+                      size="sm"
+                      // startDecorator={<AccessTimeFilledRoundedIcon />}
+                      defaultValue="1"
+                    >
+                      <Option value="1">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          Pcs
+                        </Typography>
+                      </Option>
+                      <Option value="2">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          Pcs2 { }
+                        </Typography>
+                      </Option>
+                      <Option value="3">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          Pcs3
+                        </Typography>
+                      </Option>
+                    </Select>
+                  </FormControl>
+                </div> */}
+
+
+
+
+
+
+                <div style={{
+                  width: '50%'
+                }}>
+                  <FormControl sx={{ display: { sm: 'contents' } }}>
+                    <FormLabel>Product Category</FormLabel>
+                    <Select
+                      size="sm"
+                      // startDecorator={<AccessTimeFilledRoundedIcon />}
+                      defaultValue="1"
+                    >
+                      <Option value="1">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          N.A
+                        </Typography>
+                      </Option>
+                      <Option value="2">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          abc
+                        </Typography>
+                      </Option>
+                      <Option value="3">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          xyz
+                        </Typography>
+                      </Option>
+                    </Select>
+                  </FormControl>
+                </div>
+                <div style={{
+                  width: '50%'
+                }}>
+                  <FormControl sx={{ display: { sm: 'contents' } }}>
+                    <FormLabel>Sub Category</FormLabel>
+                    <Select
+                      size="sm"
+                      // startDecorator={<AccessTimeFilledRoundedIcon />}
+                      defaultValue="1"
+                    >
+                      <Option value="1">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          Zozon
+                        </Typography>
+                      </Option>
+                      <Option value="2">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          abc
+                        </Typography>
+                      </Option>
+                      <Option value="3">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          abc
+                        </Typography>
+                      </Option>
+                    </Select>
+                  </FormControl>
+                </div>
+              </Stack>
+              <Stack direction="row" spacing={2}>
+              
+                <div style={{
+                  width: '25%'
+                }}>
+                  <FormControl sx={{ display: { sm: 'contents' } }}>
+                    <FormLabel>Type</FormLabel>
+                    <Select
+                      size="sm"
+                      // startDecorator={<AccessTimeFilledRoundedIcon />}
+                      defaultValue="1"
+                    >
+                      <Option value="1">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          Bought Out
+                        </Typography>
+                      </Option>
+                      <Option value="2">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          Sold Out
+                        </Typography>
+                      </Option>
+                      <Option value="3">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          Not Bought Out
+                        </Typography>
+                      </Option>
+                    </Select>
+                  </FormControl>
+                </div>
+                
+                  <FormControl sx={{ flexGrow: 1 }}>
+                    <FormLabel>Current Revision</FormLabel>
+                    <Input
+                      size="sm"
+                      type="text"
+                      // startDecorator={<EmailRoundedIcon />}
+                      placeholder="N.A"
+                      defaultValue="00001"
+                      sx={{ flexGrow: 1 }}
+                    />
+                  </FormControl>
+                
+
+                <FormControl sx={{ flexGrow: 1 }}>
+                  <FormLabel>Current Drawing</FormLabel>
+                  <Input
+                    size="sm"
+                    type="text"
+                    // startDecorator={<EmailRoundedIcon />}
+                    placeholder="N.A"
+                    defaultValue=""
+                    sx={{ flexGrow: 1 }}
+                  />
+                </FormControl>
+              </Stack>
+              <Stack direction="row" spacing={2}>
+              
+                <div style={{
+                  width: '49%'
+                }}>
+                  <FormControl sx={{ display: { sm: 'contents' } }}>
+                    <FormLabel>Drawing Status</FormLabel>
+                    <Select
+                      size="sm"
+                      // startDecorator={<AccessTimeFilledRoundedIcon />}
+                      defaultValue="1"
+                    >
+                      <Option value="1">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          Master
+                        </Typography>
+                      </Option>
+                      <Option value="2">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          Master2
+                        </Typography>
+                      </Option>
+                      <Option value="3">
+
+                        <Typography textColor="text.tertiary" ml={0.5}>
+                          Master2
+                        </Typography>
+                      </Option>
+                    </Select>
+                  </FormControl>
+                </div>
+                
+                  <FormControl sx={{ flexGrow: 1 }}>
+                    <FormLabel>Short Name</FormLabel>
+                    <Input
+                      size="sm"
+                      type="text"
+                      // startDecorator={<EmailRoundedIcon />}
+                      placeholder="Short Name"
+                      defaultValue=""
+                      sx={{ flexGrow: 1 }}
+                    />
+                  </FormControl>
+                
+
+               
+              </Stack>
+                <Stack direction="row" spacing={2} sx={{justifyContent:'center'}}>
+                <Button variant='soft' color='danger'><CloseRoundedIcon/></Button>
+                <Button variant='solid'>Save</Button>
+                <Button variant='soft' color='success'><RefreshRoundedIcon/></Button>
+                </Stack>
+  
             </Stack>
-          </Stack> */}
+          </Stack>
           {/* <Stack
             direction="column"
             spacing={2}
@@ -368,7 +919,8 @@ export default function MyProfile() {
               </Button>
             </CardActions>
           </CardOverflow> */}
-        </Card>
+        </Card> 
+ 
         {/* <Card>
           <Box sx={{ mb: 1 }}>
             <Typography level="title-md">Bio</Typography>
@@ -434,7 +986,10 @@ export default function MyProfile() {
             </CardActions>
           </CardOverflow>
         </Card> */}
-      </Stack> 
+      </Stack>
     </Box>
+      }
+     </>
   );
 }
+export default MyProfile;

@@ -40,6 +40,13 @@ import AutoAwesomeMosaicIcon from "@mui/icons-material/AutoAwesomeMosaic";
 import ERP from "../../public/ERP.svg";
 import ColorSchemeToggle from "./ColorSchemeToggle";
 import { closeSidebar } from "../../utils";
+import logo1 from '../assets/companyLogo/logo1.jpeg'
+import logo2 from '../assets/companyLogo/logo2.jpeg'
+import MyProfile from "./MyProfile";
+import { useDispatch } from 'react-redux';
+import { setShowTypography } from "../visibilitySlice";
+
+
 
 function Toggler({
   defaultExpanded = false,
@@ -74,6 +81,26 @@ function Toggler({
 }
 
 export default function Sidebar() {
+
+  const [index, setIndex] = React.useState(0);
+  const dispatch = useDispatch();
+  const [buttonClicked, setButtonClicked] = React.useState(false);
+  const handleClickRefresh = () => {
+    setButtonClicked(true);
+  };
+  React.useEffect(() => {
+    if (buttonClicked) {
+      window.location.reload();
+    }
+  }, [buttonClicked]);
+
+  const handleClick = () => {
+
+    dispatch(setShowTypography(true));
+  
+  };
+
+
   return (
     <Sheet
       className="Sidebar"
@@ -140,7 +167,7 @@ export default function Sidebar() {
           />
         </IconButton>
         <Typography level="title-lg">ERP</Typography>
-        <ColorSchemeToggle sx={{ ml: "auto" }} />
+        <ColorSchemeToggle variant="plain" sx={{ ml: "auto" }} />
       </Box>
       <Input
         size="sm"
@@ -165,10 +192,40 @@ export default function Sidebar() {
             gap: 1,
             "--List-nestedInsetStart": "30px",
             "--ListItem-radius": (theme) => theme.vars.radius.sm,
+
+            overflowY: 'auto',
+            '&::-webkit-scrollbar': {
+              width: '3px', // Change this to adjust the width of the scrollbar
+            },
+            '&::-webkit-scrollbar-track': {
+              boxShadow: 'inset 0 0 5px 48cae4',
+              borderRadius: '10px',
+            },
+            '&::-webkit-scrollbar-thumb': {
+              background: '#9e9e9e', // Change this to adjust the color of the scrollbar
+              borderRadius: '20px',
+
+            },
+            '&::-webkit-scrollbar-thumb:hover': {
+              background: '#555',
+            },
+            '&::after': {
+              content: '""',
+              display: 'block',
+              height: '100px', // Change this to adjust the height of the scrollable area
+            },
+            scrollBehavior: 'smooth', // Makes the scrolling smooth
+
           }}
         >
           <ListItem>
-            <ListItemButton>
+            <ListItemButton
+              selected={index === 0}
+              color={index === 0 ? 'primary' : undefined}
+              onTouchMove={() => setIndex(0)}
+              onClickCapture={() => setIndex(0)}
+              onClick={handleClickRefresh}
+            >
               <SecurityIcon />
               <ListItemContent>
                 <Typography level="title-sm">Security Module</Typography>
@@ -177,7 +234,13 @@ export default function Sidebar() {
           </ListItem>
 
           <ListItem>
-            <ListItemButton>
+            <ListItemButton
+              selected={index === 1}
+              color={index === 1 ? 'primary' : undefined}
+              onTouchMove={() => setIndex(1)}
+              onClickCapture={() => setIndex(1)}
+              
+            >
               <PersonRoundedIcon />
               <ListItemContent>
                 <Typography level="title-sm">User Setting</Typography>
@@ -189,7 +252,10 @@ export default function Sidebar() {
             <ListItemButton
               role="menuitem"
               component="a"
-              // href="/joy-ui/getting-started/templates/order-dashboard/"
+              selected={index === 2}
+              color={index === 2 ? 'primary' : undefined}
+              onTouchMove={() => setIndex(2)}
+              onClickCapture={() => setIndex(2)}
             >
               <AccountBalanceWalletIcon />
               <ListItemContent>
@@ -197,57 +263,18 @@ export default function Sidebar() {
               </ListItemContent>
             </ListItemButton>
           </ListItem>
-          {/* <ListItem nested>
-            <Toggler
-              renderToggle={({ open, setOpen }) => (
-                <ListItemButton onClick={() => setOpen(!open)}>
-                  <AssignmentRoundedIcon />
-                  <ListItemContent>
-                    <Typography level="title-sm">Inventory</Typography>
-                  </ListItemContent>
-                  <KeyboardArrowDownIcon
-                    sx={{ transform: open ? 'rotate(180deg)' : 'none' }}
-                  />
-                </ListItemButton>
-              )}
-            >
-              <List sx={{ gap: 0.5 }}>
-                <ListItem sx={{ mt: 0.5 }}>
-                  <ListItemButton>All tasks</ListItemButton>
-                </ListItem>
-                <ListItem>
-                  <ListItemButton>Backlog</ListItemButton>
-                </ListItem>
-                <ListItem>
-                  <ListItemButton>In progress</ListItemButton>
-                </ListItem>
-                <ListItem>
-                  <ListItemButton>Done</ListItemButton>
-                </ListItem>
-              </List>
-            </Toggler>
-          </ListItem>
-          <ListItem>
-            <ListItemButton
-              role="menuitem"
-              component="a"
-              href="/joy-ui/getting-started/templates/messages/"
-            >
-              <QuestionAnswerRoundedIcon />
-              <ListItemContent>
-                <Typography level="title-sm">Messages</Typography>
-              </ListItemContent>
-              <Chip size="sm" color="primary" variant="solid">
-                4
-              </Chip>
-            </ListItemButton>
-          </ListItem> */}
+
 
           <ListItem nested>
             <Toggler
               defaultExpanded
               renderToggle={({ open, setOpen }) => (
-                <ListItemButton onClick={() => setOpen(!open)}>
+                <ListItemButton onClick={() => setOpen(!open)}
+                selected={index === 3}
+                color={index === 3 ? 'primary' : undefined}
+                onTouchMove={() => setIndex(3)}
+                onClickCapture={() => setIndex(3)}
+                >
                   <EqualizerIcon />
                   <ListItemContent>
                     <Typography level="title-sm">Inventory</Typography>
@@ -260,70 +287,157 @@ export default function Sidebar() {
             >
 
               <List>
-              <ListItem nested>
-                <Toggler
-                  defaultExpanded
-                  renderToggle={({ open, setOpen }) => (
-                    <ListItemButton onClick={() => setOpen(!open)}>
-                      <AutoAwesomeMosaicIcon />
-                      <ListItemContent>
-                        <Typography>Master</Typography>
-                      </ListItemContent>
-                      <KeyboardArrowDownIcon
-                        sx={{ transform: open ? "rotate(180deg)" : "none" }}
-                      />
-                    </ListItemButton>
-                  )}
-                >
-                  <List sx={{ gap: 0.5 }}>
-                    <ListItem sx={{ mt: 0.5 }}>
-                      <ListItemButton>Unit Of Measurement</ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemButton>Item Group</ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemButton>Custom Head</ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemButton>Item Material</ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemButton>Product Category</ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemButton>Item Classification</ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemButton>Item Finish</ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemButton>Item Grade</ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemButton selected>Item Defination</ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemButton>Update Item Defination</ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemButton>Item Price List</ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemButton>Packing Master</ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemButton>Work Center</ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemButton>Check List</ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemButton>Work Center</ListItemButton>
-                    </ListItem>
-                  </List>
-                </Toggler>
-              </ListItem>
+                <ListItem nested>
+                  <Toggler
+                    defaultExpanded
+                    renderToggle={({ open, setOpen }) => (
+                      <ListItemButton onClick={() => setOpen(!open)}
+                      selected={index === 4}
+                      color={index === 4 ? 'primary' : undefined}
+                      onTouchMove={() => setIndex(4)}
+                      onClickCapture={() => setIndex(4)}
+                      >
+                        <AutoAwesomeMosaicIcon />
+                        <ListItemContent>
+                          <Typography>Master</Typography>
+                        </ListItemContent>
+                        <KeyboardArrowDownIcon
+                          sx={{ transform: open ? "rotate(180deg)" : "none" }}
+                        />
+                      </ListItemButton>
+                    )}
+                  >
+                    <List sx={{ gap: 0.5 }}>
+                      <ListItem sx={{ mt: 0.5 }}>
+                        <ListItemButton
+                                      selected={index === 5}
+                                      color={index === 5 ? 'primary' : undefined}
+                                      onTouchMove={() => setIndex(5)}
+                                      onClickCapture={() => setIndex(5)}
+                        >Unit Of Measurement</ListItemButton>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemButton
+                         selected={index === 6}
+                         color={index === 6 ? 'primary' : undefined}
+                         onTouchMove={() => setIndex(6)}
+                         onClickCapture={() => setIndex(6)}
+                        >Item Group</ListItemButton>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemButton
+                         selected={index === 7}
+                         color={index === 7 ? 'primary' : undefined}
+                         onTouchMove={() => setIndex(7)}
+                         onClickCapture={() => setIndex(7)}
+                        >Custom Head</ListItemButton>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemButton
+                         selected={index === 8}
+                         color={index === 8 ? 'primary' : undefined}
+                         onTouchMove={() => setIndex(8)}
+                         onClickCapture={() => setIndex(8)}
+                        >Item Material</ListItemButton>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemButton
+                         selected={index === 9}
+                         color={index === 9 ? 'primary' : undefined}
+                         onTouchMove={() => setIndex(9)}
+                         onClickCapture={() => setIndex(9)}
+                        >Product Category</ListItemButton>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemButton
+                         selected={index === 10}
+                         color={index === 10 ? 'primary' : undefined}
+                         onTouchMove={() => setIndex(10)}
+                         onClickCapture={() => setIndex(10)}
+                         
+                        >Item Classification</ListItemButton>
+                        
+                      </ListItem>
+                      <ListItem>
+                        <ListItemButton
+                         selected={index === 11}
+                         color={index === 11 ? 'primary' : undefined}
+                         onTouchMove={() => setIndex(11)}
+                         onClickCapture={() => setIndex(11)}
+                         
+                        >Item Finish</ListItemButton>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemButton
+                         selected={index === 12}
+                         color={index === 12 ? 'primary' : undefined}
+                         onTouchMove={() => setIndex(12)}
+                         onClickCapture={() => setIndex(12)}
+                        >Item Grade</ListItemButton>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemButton 
+                         selected={index === 13}
+                         color={index === 13 ? 'primary' : undefined}
+                         onTouchMove={() => setIndex(13)}
+                         onClickCapture={() => setIndex(13)}
+                         onClick={handleClick}
+                        >Item Defination
+                        </ListItemButton>
+                      </ListItem>
+                          {/* { <MyProfile showProfile={showProfile} />}  */}
+                      <ListItem>
+                        <ListItemButton
+                         selected={index === 14}
+                         color={index === 14 ? 'primary' : undefined}
+                         onTouchMove={() => setIndex(14)}
+                         onClickCapture={() => setIndex(14)}
+                        >Update Item Defination</ListItemButton>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemButton
+                         selected={index === 15}
+                         color={index === 15 ? 'primary' : undefined}
+                         onTouchMove={() => setIndex(15)}
+                         onClickCapture={() => setIndex(15)}
+
+                        >Item Price List</ListItemButton>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemButton
+                         selected={index === 16}
+                         color={index === 16 ? 'primary' : undefined}
+                         onTouchMove={() => setIndex(16)}
+                         onClickCapture={() => setIndex(16)}
+                        >Packing Master</ListItemButton>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemButton
+                         selected={index === 17}
+                         color={index === 17 ? 'primary' : undefined}
+                         onTouchMove={() => setIndex(17)}
+                         onClickCapture={() => setIndex(17)}
+                        >Work Center</ListItemButton>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemButton
+                         selected={index === 18}
+                         color={index === 18 ? 'primary' : undefined}
+                         onTouchMove={() => setIndex(18)}
+                         onClickCapture={() => setIndex(18)}
+                        >Check List</ListItemButton>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemButton
+                         selected={index === 20}
+                         color={index === 20 ? 'primary' : undefined}
+                         onTouchMove={() => setIndex(20)}
+                         onClickCapture={() => setIndex(20)}
+                        >Work Center</ListItemButton>
+                      </ListItem>
+                    </List>
+                  </Toggler>
+                </ListItem>
               </List>
 
             </Toggler>
@@ -336,7 +450,12 @@ export default function Sidebar() {
             </ListItemButton>
           </ListItem> */}
           <ListItem>
-            <ListItemButton>
+            <ListItemButton
+             selected={index === 21}
+             color={index === 21 ? 'primary' : undefined}
+             onTouchMove={() => setIndex(21)}
+             onClickCapture={() => setIndex(21)}
+            >
               <TimelineIcon />
               <ListItemContent>
                 <Typography level="title-sm">Material Requirement</Typography>
@@ -344,7 +463,13 @@ export default function Sidebar() {
             </ListItemButton>
           </ListItem>
           <ListItem>
-            <ListItemButton>
+            <ListItemButton
+             selected={index === 22}
+             color={index === 22 ? 'primary' : undefined}
+             onTouchMove={() => setIndex(22)}
+             onClickCapture={() => setIndex(22)}
+            
+            >
               <BeenhereIcon />
               <ListItemContent>
                 <Typography level="title-sm">Quality Management</Typography>
@@ -352,7 +477,13 @@ export default function Sidebar() {
             </ListItemButton>
           </ListItem>
           <ListItem>
-            <ListItemButton>
+            <ListItemButton
+            
+            selected={index === 23}
+            color={index === 23 ? 'primary' : undefined}
+            onTouchMove={() => setIndex(23)}
+            onClickCapture={() => setIndex(23)}
+           >
               <ReceiptIcon />
               <ListItemContent>
                 <Typography level="title-sm">
@@ -398,43 +529,35 @@ export default function Sidebar() {
           </ListItem>
         </List> */}
 
-        {/* <Card
+         <Card
           invertedColors
-          variant="soft"
-          color="warning"
+          variant="solid"
+          color="primary"
           size="sm"
           sx={{ boxShadow: 'none' }}
         >
           <Stack direction="row" justifyContent="space-between" alignItems="center">
-            <Typography level="title-sm">Used space</Typography>
+            <Typography level="title-md">Develop by </Typography>
             <IconButton size="sm">
-              <CloseRoundedIcon />
-            </IconButton>
+              {/* <CloseRoundedIcon /> */}
+             </IconButton>
           </Stack>
-          <Typography level="body-xs">
-            Your team has used 80% of your available space. Need more?
-          </Typography>
-          <LinearProgress variant="outlined" value={80} determinate sx={{ my: 1 }} />
-          <Button size="sm" variant="solid">
-            Upgrade plan
+          
+          <Typography level="body-lg" fontWeight={600}>
+          Sahasrara Metatach
+          </Typography> 
+      
+          {/* <LinearProgress variant="soft" value={80} determinate sx={{ my: 1 }} /> */}
+          <Button size="sm" variant="soft">
+            Visite Site
           </Button>
-        </Card> */}
+        </Card>
       </Box>
-      {/* <Divider /> */}
-      {/* <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-        <Avatar
-          variant="outlined"
-          size="sm"
-          src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
-        />
-        <Box sx={{ minWidth: 0, flex: 1 }}>
-          <Typography level="title-sm">Siriwat K.</Typography>
-          <Typography level="body-xs">siriwatk@test.com</Typography>
-        </Box>
-        <IconButton size="sm" variant="plain" color="neutral">
-          <LogoutRoundedIcon />
-        </IconButton>
-      </Box> */}
+     
     </Sheet>
   );
 }
+function setIsProfileUpdated(arg0: boolean): any {
+  throw new Error("Function not implemented.");
+}
+
